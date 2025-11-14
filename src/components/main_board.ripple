@@ -1,7 +1,7 @@
 import { track } from 'ripple';
 import { Card } from './card.ripple';
 import Filter from './filter.ripple';
-import { rumorData } from '../mock_data/rumor';
+import { rumorData, npcNames, rumorContents } from '../mock_data/rumor';
 import { CreateRumorDialog } from '../components/dialog/create_rumor_dialog.ripple';
 
 export component MainBoard() {
@@ -57,6 +57,19 @@ export component MainBoard() {
 		@rumorsAll = [newRumorWithDetails, ...@rumorsAll];
 	};
 
+	const onDeleteRumor = (id: string) => {
+		@rumors = @rumors.filter((r) => r.id !== id);
+		@rumorsAll = @rumorsAll.filter((r) => r.id !== id);
+	};
+
+	const onGenerateRumor = () => {
+		const randomRumor = rumorData[Math.floor(Math.random() * rumorData.length)];
+		onCreateNewRumor(randomRumor);
+		const name = npcNames[Math.floor(Math.random() * npcNames.length)];
+		const content = rumorContents[Math.floor(Math.random() * rumorContents.length)];
+		onCreateNewRumor({ name, content });
+	};
+
 	<head>
 		<title>{'Town Gossip Board – กระดานข่าวลือของเมือง'}</title>
 	</head>
@@ -81,18 +94,28 @@ export component MainBoard() {
 		<div class="border-1 border-slate-600 rounded p-4 ">
 			<div class="flex justify-between align-center">
 				<p class="text-lg py-4 font-bold">{'Rumors'}</p>
-				<button class="btn btn-success btn-md" onclick="create_rumor_dialog.showModal()">
-					{'Add Rumor'}
-				</button>
+				<div class="flex justify-center align-center gap-2">
+					<button
+						class="btn btn-success btn-md"
+						onclick="create_rumor_dialog.showModal()"
+					>
+						{'Add Rumor'}
+					</button>
+					<button class="btn btn-primary btn-md" onclick={onGenerateRumor}>
+						{'Generate'}
+					</button>
+				</div>
 			</div>
 
 			for (const rumor of @rumors) {
 				<div class="py-1">
 					<Card
+						id={rumor.id}
 						name={rumor.name}
 						content={rumor.content}
 						image_url={rumor.image_url}
 						like={rumor.like}
+						onDelete={onDeleteRumor}
 					/>
 				</div>
 			}

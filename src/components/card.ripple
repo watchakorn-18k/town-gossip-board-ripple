@@ -1,4 +1,11 @@
-export component Card(props: { name: string; content: string; image_url: string; like: number }) {
+export component Card(props: {
+	id: string;
+	name: string;
+	content: string;
+	image_url: string;
+	like: number;
+	onDelete?: (id) => void;
+}) {
 	<div class="border-1 border-slate-600 rounded p-2">
 		<div class="flex justify-start align-start">
 			<div class="flex justify-start align-start gap-2 flex-1">
@@ -8,6 +15,12 @@ export component Card(props: { name: string; content: string; image_url: string;
 					<p class="text-sm overflow-hidden text-ellipsis">{props.content}</p>
 				</div>
 			</div>
+			<button
+				class="btn btn-sm btn-circle btn-ghost"
+				onclick={() => props.onDelete(props.id)}
+			>
+				{'✕'}
+			</button>
 		</div>
 	</div>
 }
