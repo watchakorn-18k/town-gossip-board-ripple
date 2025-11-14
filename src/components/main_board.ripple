@@ -1,17 +1,39 @@
-import { track } from 'ripple';
+import { effect, track } from 'ripple';
 import { Card } from './card.ripple';
+import Filter from './filter.ripple';
 import { rumorData } from '../mock_data/rumor';
 
 export component MainBoard() {
-	const rumors = track(rumorData);
-
-	<div class="border-1 border-gray-300 rounded mx-4 p-4 ">
-		<p class="text-lg py-2 font-bold">{'Rumors'}</p>
-		for (const rumor of @rumors) {
-			<div class="py-1">
-				<Card name={rumor.name} content={rumor.content} image_url={rumor.image_url} />
-			</div>
+	let rumors = track(rumorData);
+	const filterByName = (rumors: typeof rumorData, name: string) => {
+		if (name === '') {
+			return rumors;
 		}
+		return rumors.filter((r) => r.name === name);
+	};
+
+	<div class="flex flex-col justify-center align-center lg:flex-row lg:gap-4 mx-4">
+		<Filter
+			{@rumors}
+			onChange={(keyword) => {
+				const filtered = filterByName(rumorData, keyword);
+				console.log('Filtering by:', keyword, 'Result:', filtered);
+				@rumors = filtered;
+			}}
+		/>
+		<div class="border-1 border-gray-300 rounded p-4 ">
+			<p class="text-lg py-2 font-bold">{'Rumors'}</p>
+			for (const rumor of @rumors) {
+				<div class="py-1">
+					<Card
+						name={rumor.name}
+						content={rumor.content}
+						image_url={rumor.image_url}
+						like={rumor.like}
+					/>
+				</div>
+			}
+		</div>
 	</div>
 }
 

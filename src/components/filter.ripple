@@ -1,0 +1,25 @@
+import type { Rumor } from '../models/rumor.ts';
+
+export component Filter(props: {
+	rumors: Rumor[];
+	onChange: (newKeyword: string) => void;
+}) {
+	// select dropdown for NPC names
+	<div class="mb-4 border-1 border-gray-300 rounded p-4">
+		<p class="text-lg py-1 font-bold">{'Filter'}</p>
+		<div>
+			<p class="py-1 text-sm font-bold">{'NPC'}</p>
+
+			<select
+				class="border-1 border-gray-300 rounded p-2 w-full"
+				onChange={(e) => props.onChange(e.target.value)}
+			>
+				<option value="">{'All'}</option>
+				for (const rumor of @props.rumors) {
+					<option value={rumor.name}>{rumor.name}</option>
+				}
+			</select>
+		</div>
+	</div>
+}
+export default Filter
