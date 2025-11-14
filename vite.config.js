@@ -7,5 +7,5 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  base: '/town-gossip-board/', 
+  base: '/town-gossip-board-ripple/', 
 });
