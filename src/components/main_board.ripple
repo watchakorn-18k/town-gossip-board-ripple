@@ -76,7 +76,7 @@ export component MainBoard() {
 			{'Town Gossip Board – กระดานข่าวลือของเมือง'}
 		</h1>
 
-		<div class="flex flex-col justify-center align-center lg:flex-row lg:gap-4 mx-4">
+		<div class="flex flex-col justify-center align-center lg:flex-row lg:gap-4 m-4">
 			<Filter
 				rumors={@rumorsAll}
 				onChange={(keyword) => {
