@@ -6,6 +6,7 @@ import { CreateRumorDialog } from '../components/dialog/create_rumor_dialog.ripp
 
 export component MainBoard() {
 	let rumors = track(rumorData);
+	let rumorsAll = track(rumorData);
 	const filterByName = (rumors: typeof rumorData, name: string) => {
 		if (name === '') {
 			return rumors;
@@ -44,6 +45,16 @@ export component MainBoard() {
 			return false;
 		});
 	};
+	const onCreateNewRumor = (newRumor: { name: string; content: string }) => {
+		const newRumorWithDetails = {
+			...newRumor,
+			image_url: 'https://i.pravatar.cc/150?img=3',
+			like: 0,
+			createAt: new Date().toISOString(),
+		};
+		@rumors = [newRumorWithDetails, ...@rumors];
+		@rumorsAll = [newRumorWithDetails, ...@rumorsAll];
+	};
 
 	<head>
 		<title>{'Town Gossip Board – กระดานข่าวลือของเมือง'}</title>
@@ -51,10 +62,10 @@ export component MainBoard() {
 	<h1 class="text-center text-2xl py-8 font-bold">
 		{'Town Gossip Board – กระดานข่าวลือของเมือง'}
 	</h1>
-	<CreateRumorDialog />
+
 	<div class="flex flex-col justify-center align-center lg:flex-row lg:gap-4 mx-4">
 		<Filter
-			{@rumors}
+			rumors={@rumorsAll}
 			onChange={(keyword) => {
 				const filtered = filterByName(rumorData, keyword);
 				console.log('Filtering by:', keyword, 'Result:', filtered);
@@ -66,8 +77,13 @@ export component MainBoard() {
 				@rumors = filtered;
 			}}
 		/>
-		<div class="border-1 border-gray-300 rounded p-4 ">
-			<p class="text-lg py-2 font-bold">{'Rumors'}</p>
+		<div class="border-1 border-slate-600 rounded p-4 ">
+			<div class="flex justify-between align-center">
+				<p class="text-lg py-4 font-bold">{'Rumors'}</p>
+				<button class="btn btn-success btn-md" onclick="create_rumor_dialog.showModal()">
+					{'Add Rumor'}
+				</button>
+			</div>
 
 			for (const rumor of @rumors) {
 				<div class="py-1">
@@ -81,6 +97,7 @@ export component MainBoard() {
 			}
 		</div>
 	</div>
+	<CreateRumorDialog onCreate={onCreateNewRumor} />
 }
 
 export default MainBoard

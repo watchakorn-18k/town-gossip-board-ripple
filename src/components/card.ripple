@@ -1,5 +1,5 @@
 export component Card(props: { name: string; content: string; image_url: string; like: number }) {
-	<div class="border-1 border-gray-300 rounded p-2">
+	<div class="border-1 border-slate-600 rounded p-2">
 		<div class="flex justify-start align-start">
 			<div class="flex justify-start align-start gap-2 flex-1">
 				<img src={props.image_url} class="w-16 h-16 rounded-full" />

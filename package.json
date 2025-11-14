@@ -17,16 +17,17 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^9.0.0",
     "@ripple-ts/eslint-plugin": "latest",
-    "prettier": "^3.6.2",
     "@ripple-ts/prettier-plugin": "latest",
-    "typescript": "^5.9.2",
-    "vite": "^7.1.4",
-    "@ripple-ts/vite-plugin": "latest",
     "@ripple-ts/typescript-plugin": "latest",
+    "@ripple-ts/vite-plugin": "latest",
+    "@tailwindcss/vite": "^4.1.12",
+    "daisyui": "^5.5.3",
+    "eslint": "^9.0.0",
+    "prettier": "^3.6.2",
     "tailwindcss": "^4.1.12",
-    "@tailwindcss/vite": "^4.1.12"
+    "typescript": "^5.9.2",
+    "vite": "^7.1.4"
   },
   "dependencies": {
     "ripple": "latest",
