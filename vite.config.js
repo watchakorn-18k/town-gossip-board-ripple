@@ -3,8 +3,9 @@ import { ripple } from '@ripple-ts/vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-	plugins: [ripple(), tailwindcss()],
-	server: {
-		port: 3000,
-	},
+  plugins: [ripple(), tailwindcss()],
+  server: {
+    port: 3000,
+  },
+  base: '/town-gossip-board/', 
 });
