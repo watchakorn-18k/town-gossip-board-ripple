@@ -48,7 +48,8 @@ export component MainBoard() {
 	const onCreateNewRumor = (newRumor: { name: string; content: string }) => {
 		const newRumorWithDetails = {
 			...newRumor,
-			image_url: 'https://i.pravatar.cc/150?img=3',
+			image_url: 'https://api.dicebear.com/9.x/pixel-art/svg?seed=' +
+				encodeURIComponent(newRumor.name),
 			like: 0,
 			createAt: new Date().toISOString(),
 		};
