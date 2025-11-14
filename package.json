@@ -29,6 +29,7 @@
     "@tailwindcss/vite": "^4.1.12"
   },
   "dependencies": {
-    "ripple": "latest"
+    "ripple": "latest",
+    "ripple-router": "^0.4.10"
   }
 }

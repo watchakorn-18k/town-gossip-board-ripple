@@ -2,9 +2,6 @@ import { MainBoard } from './components/main_board.ripple';
 
 export component App() {
 	<div class="app">
-		<h1 class="text-center text-2xl py-8 font-bold">
-			{'Town Gossip Board – กระดานข่าวลือของเมือง'}
-		</h1>
 		<MainBoard />
 	</div>
 }

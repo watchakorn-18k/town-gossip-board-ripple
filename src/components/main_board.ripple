@@ -2,6 +2,7 @@ import { track } from 'ripple';
 import { Card } from './card.ripple';
 import Filter from './filter.ripple';
 import { rumorData } from '../mock_data/rumor';
+import { CreateRumorDialog } from '../components/dialog/create_rumor_dialog.ripple';
 
 export component MainBoard() {
 	let rumors = track(rumorData);
@@ -44,6 +45,13 @@ export component MainBoard() {
 		});
 	};
 
+	<head>
+		<title>{'Town Gossip Board – กระดานข่าวลือของเมือง'}</title>
+	</head>
+	<h1 class="text-center text-2xl py-8 font-bold">
+		{'Town Gossip Board – กระดานข่าวลือของเมือง'}
+	</h1>
+	<CreateRumorDialog />
 	<div class="flex flex-col justify-center align-center lg:flex-row lg:gap-4 mx-4">
 		<Filter
 			{@rumors}
@@ -60,6 +68,7 @@ export component MainBoard() {
 		/>
 		<div class="border-1 border-gray-300 rounded p-4 ">
 			<p class="text-lg py-2 font-bold">{'Rumors'}</p>
+
 			for (const rumor of @rumors) {
 				<div class="py-1">
 					<Card
