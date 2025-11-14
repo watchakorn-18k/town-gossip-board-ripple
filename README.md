@@ -1,6 +1,12 @@
-# Ripple Basic Template
+# Town Gossip Board By Ripple
 
 A minimal Ripple application template with TypeScript and Vite.
+
+<div align="center">
+
+![alt text](image.png)
+
+</div>
 
 ## Getting Started
 
