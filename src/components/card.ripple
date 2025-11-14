@@ -1,0 +1,13 @@
+export component Card(props: { name: string; content: string; image_url: string }) {
+	<div class="border-1 rounded p-2">
+		<div class="flex justify-start align-start gap-2">
+			<img src={props.image_url} class="w-16 h-16 rounded-full" />
+			<div class="flex flex-col">
+				<p class="text-md font-bold">{props.name}</p>
+				<p class="text-sm overflow-hidden text-ellipsis">{props.content}</p>
+			</div>
+		</div>
+	</div>
+}
+
+export default Card

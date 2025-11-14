@@ -1,0 +1,71 @@
+import { track } from 'ripple';
+import { Card } from './components/card.ripple';
+
+export component App() {
+	const rumors = track([
+		{
+			name: 'Gandalf the Grey',
+			content: 'Saw the player sneaking into the dungeon at night.',
+			image_url: 'https://picsum.photos/200?random=1',
+		},
+		{
+			name: 'Bob the Blacksmith',
+			content: 'Heard the player broke the lock on the chest in the basement.',
+			image_url: 'https://picsum.photos/200?random=2',
+		},
+		{
+			name: 'Ella the Innkeeper',
+			content: 'The player was seen leaving the inn in a hurry.',
+			image_url: 'https://picsum.photos/200?random=3',
+		},
+		{
+			name: 'Marla the Herbalist',
+			content: 'Claims the player bought a suspicious amount of nightshade.',
+			image_url: 'https://picsum.photos/200?random=4',
+		},
+		{
+			name: 'Toren the Guard',
+			content: 'Swears he saw the player jumping over the north gate at midnight.',
+			image_url: 'https://picsum.photos/200?random=5',
+		},
+		{
+			name: 'Lena the Bard',
+			content: 'Says the player paid her to sing a distracting song during a robbery.',
+			image_url: 'https://picsum.photos/200?random=6',
+		},
+		{
+			name: 'Old Man Rurik',
+			content: 'Believes the player is the chosen one destined to slay the Shadow Serpent.',
+			image_url: 'https://picsum.photos/200?random=7',
+		},
+		{
+			name: 'Sera the Merchant',
+			content: 'Saw the player haggling for a cursed artifact.',
+			image_url: 'https://picsum.photos/200?random=8',
+		},
+		{
+			name: 'Kelvin the Baker',
+			content: 'Claims the player stole an entire tray of blueberry muffins at dawn.',
+			image_url: 'https://picsum.photos/200?random=9',
+		},
+		{
+			name: 'Willa the Farmer',
+			content: 'Says the player was talking to her chickens… and the chickens answered back.',
+			image_url: 'https://picsum.photos/200?random=10',
+		},
+	]);
+
+	<div class="app">
+		<h1 class="text-center text-xl py-4 font-bold">
+			{'Town Gossip Board – กระดานข่าวลือของเมือง'}
+		</h1>
+		<div class="border-1 rounded mx-4 p-4 ">
+			<p class="text-lg py-2 font-bold">{'Rumors'}</p>
+			for (const rumor of @rumors) {
+				<div class="py-1">
+					<Card name={rumor.name} content={rumor.content} image_url={rumor.image_url} />
+				</div>
+			}
+		</div>
+	</div>
+}
