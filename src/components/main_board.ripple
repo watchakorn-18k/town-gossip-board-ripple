@@ -1,4 +1,4 @@
-import { track } from 'ripple';
+import { track, Portal } from 'ripple';
 import { Card } from './card.ripple';
 import Filter from './filter.ripple';
 import { rumorData, npcNames, rumorContents } from '../mock_data/rumor';
@@ -63,8 +63,6 @@ export component MainBoard() {
 	};
 
 	const onGenerateRumor = () => {
-		const randomRumor = rumorData[Math.floor(Math.random() * rumorData.length)];
-		onCreateNewRumor(randomRumor);
 		const name = npcNames[Math.floor(Math.random() * npcNames.length)];
 		const content = rumorContents[Math.floor(Math.random() * rumorContents.length)];
 		onCreateNewRumor({ name, content });
@@ -73,55 +71,72 @@ export component MainBoard() {
 	<head>
 		<title>{'Town Gossip Board – กระดานข่าวลือของเมือง'}</title>
 	</head>
-	<h1 class="text-center text-2xl py-8 font-bold">
-		{'Town Gossip Board – กระดานข่าวลือของเมือง'}
-	</h1>
+	<Portal target={document.body}>
+		<h1 class="text-center text-2xl py-8 font-bold">
+			{'Town Gossip Board – กระดานข่าวลือของเมือง'}
+		</h1>
 
-	<div class="flex flex-col justify-center align-center lg:flex-row lg:gap-4 mx-4">
-		<Filter
-			rumors={@rumorsAll}
-			onChange={(keyword) => {
-				const filtered = filterByName(rumorData, keyword);
-				console.log('Filtering by:', keyword, 'Result:', filtered);
-				@rumors = filtered;
-			}}
-			onChangeDate={(keyword) => {
-				const filtered = filterByDate(rumorData, keyword);
-				console.log('Filtering by date:', keyword, 'Result:', filtered);
-				@rumors = filtered;
-			}}
-		/>
-		<div class="border-1 border-slate-600 rounded p-4 ">
-			<div class="flex justify-between align-center">
-				<p class="text-lg py-4 font-bold">{'Rumors'}</p>
-				<div class="flex justify-center align-center gap-2">
-					<button
-						class="btn btn-success btn-md"
-						onclick="create_rumor_dialog.showModal()"
-					>
-						{'Add Rumor'}
-					</button>
-					<button class="btn btn-primary btn-md" onclick={onGenerateRumor}>
-						{'Generate'}
-					</button>
+		<div class="flex flex-col justify-center align-center lg:flex-row lg:gap-4 mx-4">
+			<Filter
+				rumors={@rumorsAll}
+				onChange={(keyword) => {
+					const filtered = filterByName(rumorData, keyword);
+					console.log('Filtering by:', keyword, 'Result:', filtered);
+					@rumors = filtered;
+				}}
+				onChangeDate={(keyword) => {
+					const filtered = filterByDate(rumorData, keyword);
+					console.log('Filtering by date:', keyword, 'Result:', filtered);
+					@rumors = filtered;
+				}}
+			/>
+			<div class="border-1 border-slate-600 rounded p-4 ">
+				<div class="flex justify-between align-center">
+					<p class="text-lg py-4 font-bold">{'Rumors'}</p>
+					<div class="flex justify-center align-center gap-2">
+						<button
+							class="btn btn-success btn-md"
+							onclick="create_rumor_dialog.showModal()"
+						>
+							{'Add Rumor'}
+						</button>
+						<button class="btn btn-primary btn-md" onclick={onGenerateRumor}>
+							{'Generate'}
+						</button>
+					</div>
 				</div>
+
+				for (const rumor of @rumors) {
+					<div class="py-1  rumor-card">
+						<Card
+							id={rumor.id}
+							name={rumor.name}
+							content={rumor.content}
+							image_url={rumor.image_url}
+							like={rumor.like}
+							onDelete={onDeleteRumor}
+						/>
+					</div>
+				}
 			</div>
-
-			for (const rumor of @rumors) {
-				<div class="py-1">
-					<Card
-						id={rumor.id}
-						name={rumor.name}
-						content={rumor.content}
-						image_url={rumor.image_url}
-						like={rumor.like}
-						onDelete={onDeleteRumor}
-					/>
-				</div>
-			}
 		</div>
-	</div>
-	<CreateRumorDialog onCreate={onCreateNewRumor} />
+		<CreateRumorDialog onCreate={onCreateNewRumor} />
+	</Portal>
+	<style>
+		.rumor-card {
+			animation: slideDownFade 0.5s ease-out;
+		}
+		@keyframes slideDownFade {
+			from {
+				transform: translateY(-20px);
+				opacity: 0;
+			}
+			to {
+				transform: translateY(0);
+				opacity: 1;
+			}
+		}
+	</style>
 }
 
 export default MainBoard
