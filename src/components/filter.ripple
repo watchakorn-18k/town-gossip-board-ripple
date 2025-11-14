@@ -3,6 +3,7 @@ import type { Rumor } from '../models/rumor.ts';
 export component Filter(props: {
 	rumors: Rumor[];
 	onChange: (newKeyword: string) => void;
+	onChangeDate: (newDateKeyword: string) => void;
 }) {
 	// select dropdown for NPC names
 	<div class="mb-4 border-1 border-gray-300 rounded p-4">
@@ -18,6 +19,20 @@ export component Filter(props: {
 				for (const rumor of @props.rumors) {
 					<option value={rumor.name}>{rumor.name}</option>
 				}
+			</select>
+		</div>
+		<div>
+			<p class="py-1 text-sm font-bold">{'Date'}</p>
+
+			<select
+				class="border-1 border-gray-300 rounded p-2 w-full"
+				onChange={(e) => props.onChangeDate(e.target.value)}
+			>
+				<option value="all">{'All'}</option>
+				<option value="today">{'Today'}</option>
+				<option value="yesterday">{'Yesterday'}</option>
+				<option value="this_week">{'This Week'}</option>
+				<option value="this_month">{'This Month'}</option>
 			</select>
 		</div>
 	</div>

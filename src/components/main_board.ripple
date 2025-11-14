@@ -1,4 +1,4 @@
-import { effect, track } from 'ripple';
+import { track } from 'ripple';
 import { Card } from './card.ripple';
 import Filter from './filter.ripple';
 import { rumorData } from '../mock_data/rumor';
@@ -12,12 +12,49 @@ export component MainBoard() {
 		return rumors.filter((r) => r.name === name);
 	};
 
+	const filterByDate = (rumors: typeof rumorData, name: string) => {
+		if (name === '' || name === 'all') {
+			return rumors;
+		}
+		const now = new Date();
+		return rumors.filter((r) => {
+			const rumorDate = new Date(r.createAt);
+			console.log('Filtering by date:', name, 'Rumor date:', rumorDate);
+			if (name === 'today') {
+				return rumorDate.getDate() === now.getDate() &&
+					rumorDate.getMonth() === now.getMonth() &&
+					rumorDate.getFullYear() === now.getFullYear();
+			} else if (name === 'yesterday') {
+				const yesterday = new Date(now);
+				yesterday.setDate(now.getDate() - 1);
+				return rumorDate.getDate() === yesterday.getDate() &&
+					rumorDate.getMonth() === yesterday.getMonth() &&
+					rumorDate.getFullYear() === yesterday.getFullYear();
+			} else if (name === 'this_week') {
+				const weekStart = new Date(now);
+				weekStart.setDate(now.getDate() - now.getDay());
+				const weekEnd = new Date(weekStart);
+				weekEnd.setDate(weekStart.getDate() + 7);
+				return rumorDate >= weekStart && rumorDate < weekEnd;
+			} else if (name === 'this_month') {
+				return rumorDate.getMonth() === now.getMonth() &&
+					rumorDate.getFullYear() === now.getFullYear();
+			}
+			return false;
+		});
+	};
+
 	<div class="flex flex-col justify-center align-center lg:flex-row lg:gap-4 mx-4">
 		<Filter
 			{@rumors}
 			onChange={(keyword) => {
 				const filtered = filterByName(rumorData, keyword);
 				console.log('Filtering by:', keyword, 'Result:', filtered);
+				@rumors = filtered;
+			}}
+			onChangeDate={(keyword) => {
+				const filtered = filterByDate(rumorData, keyword);
+				console.log('Filtering by date:', keyword, 'Result:', filtered);
 				@rumors = filtered;
 			}}
 		/>
