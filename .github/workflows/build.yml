@@ -1,13 +1,12 @@
-name: Build Town Gossip Board
+name: Build & Deploy Town Gossip Board
 
 on:
     push:
         branches:
             - master
-    pull_request:
 
 jobs:
-    build:
+    build-and-deploy:
         runs-on: ubuntu-latest
 
         steps:
@@ -33,9 +32,10 @@ jobs:
             - name: List dist files
               run: ls -l ./dist
 
-            # 6. Upload artifact
-            - name: Upload dist as artifact
-              uses: actions/upload-artifact@v4
+            # 6. Deploy to GitHub Pages
+            - name: Deploy to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v7
               with:
-                  name: town-gossip-board-dist
-                  path: ./dist
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./dist
+                  publish_branch: gh-pages
