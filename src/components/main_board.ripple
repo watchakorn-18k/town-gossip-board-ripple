@@ -123,10 +123,7 @@ export component MainBoard() {
 		<CreateRumorDialog onCreate={onCreateNewRumor} />
 	</Portal>
 	<style>
-		.rumor-card {
-			animation: slideDownFade 0.5s ease-out;
-		}
-		@keyframes slideDownFade {
+		@keyframes -global-slideDownFade {
 			from {
 				transform: translateY(-20px);
 				opacity: 0;

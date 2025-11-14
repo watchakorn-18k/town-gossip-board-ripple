@@ -23,6 +23,12 @@ export component Card(props: {
 			</button>
 		</div>
 	</div>
+
+	<style>
+		.rumor-card {
+			animation: slideDownFade 0.5s ease-out;
+		}
+	</style>
 }
 
 export default Card
