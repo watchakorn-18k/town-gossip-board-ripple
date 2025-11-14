@@ -1,0 +1,18 @@
+import { track } from 'ripple';
+import { Card } from './card.ripple';
+import { rumorData } from '../mock_data/rumor';
+
+export component MainBoard() {
+	const rumors = track(rumorData);
+
+	<div class="border-1 border-gray-300 rounded mx-4 p-4 ">
+		<p class="text-lg py-2 font-bold">{'Rumors'}</p>
+		for (const rumor of @rumors) {
+			<div class="py-1">
+				<Card name={rumor.name} content={rumor.content} image_url={rumor.image_url} />
+			</div>
+		}
+	</div>
+}
+
+export default MainBoard
