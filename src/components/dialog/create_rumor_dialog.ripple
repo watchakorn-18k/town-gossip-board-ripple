@@ -2,7 +2,7 @@ export component CreateRumorDialog(props: {
 	onCreate?: (newRumor: { name: string; content: string }) => void;
 }) {
 	<dialog id="create_rumor_dialog" class="modal">
-		<div class="modal-box">
+		<div class="modal-box rpgui-container framed !p-4">
 			<form method="dialog">
 				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
 					{'✕'}
@@ -21,7 +21,7 @@ export component CreateRumorDialog(props: {
 					class="input input-bordered w-full"
 				/>
 			</div>
-			<label class="label mt-4">
+			<label class="label mt-8">
 				<span class="label-text">{'Rumor Content'}</span>
 			</label>
 			<textarea
@@ -33,7 +33,7 @@ export component CreateRumorDialog(props: {
 			// Clear inputs
 
 			<button
-				class="btn btn-primary w-full"
+				class="rpgui-button w-full"
 				onclick={() => {
 					const nameInput = document.getElementById('npc_name_input') as HTMLInputElement;
 					const contentInput = document.getElementById(

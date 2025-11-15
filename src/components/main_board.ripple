@@ -74,7 +74,7 @@ export component MainBoard() {
 		<title>{'Town Gossip Board – กระดานข่าวลือของเมือง'}</title>
 	</head>
 	<Portal target={document.body}>
-		<div class="rpgui-content rpgui-cursor-default" style="overflow-y:scroll;">
+		<div class="rpgui-content" style="overflow-y:scroll;">
 			<div
 				class="flex flex-col justify-center align-center lg:flex-row lg:gap-4 m-4 inner rpgui-container framed"
 				style="overflow-y:scroll;position:relative"
@@ -95,7 +95,9 @@ export component MainBoard() {
 				<div class="border-1 border-slate-600 rpgui-container framed-grey rounded p-4 ">
 					<h1 class="!text-center !text-2xl !py-8 font-bold rpgui-container framed-grey">
 						{'Town Gossip Board – กระดานข่าวลือของเมือง'}
+						<hr class="mt-4" />
 					</h1>
+
 					<div class="flex justify-between align-center">
 						<p class="text-lg py-4 font-bold">{'Rumors'}</p>
 						<div class="flex justify-center align-center gap-2">

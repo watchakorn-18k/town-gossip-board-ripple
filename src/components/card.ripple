@@ -18,10 +18,7 @@ export component Card(props: {
 					<p class="text-sm overflow-hidden text-ellipsis">{props.content}</p>
 				</div>
 			</div>
-			<button
-				class="btn btn-sm btn-circle btn-ghost"
-				onclick={() => props.onDelete(props.id)}
-			>
+			<button class="btn btn-circle btn-ghost" onclick={() => props.onDelete(props.id)}>
 				{'✕'}
 			</button>
 		</div>
