@@ -7,7 +7,7 @@ export component Filter(props: {
 }) {
 	// select dropdown for NPC names
 	<div
-		class="mb-4 border-1 border-slate-600 rounded p-4 min-w-[200px] lg:w-1/4"
+		class="mb-4 border-1 border-slate-600 rounded p-4 min-w-[200px] lg:w-1/4 rpgui-container framed-grey"
 		style="animation: slideDownFade 0.5s ease-out;"
 	>
 		<p class="text-lg py-1 font-bold">{'Filter'}</p>
