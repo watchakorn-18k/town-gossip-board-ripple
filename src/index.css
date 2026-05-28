@@ -93,6 +93,48 @@ body {
 	transform: translateY(1px);
 }
 
+/* flat action button — sidesteps rpgui-button golden end-caps bug */
+.action-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	height: 38px;
+	padding: 0 16px;
+	font-family: inherit;
+	font-size: 0.82rem;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	color: var(--parchment);
+	background: rgba(20, 12, 4, 0.55);
+	border: 1px solid rgba(217, 199, 154, 0.35);
+	border-radius: 3px;
+	cursor: pointer;
+	transition: background 160ms ease, color 160ms ease, border-color 160ms ease, transform 100ms ease;
+	white-space: nowrap;
+}
+.action-btn:hover {
+	background: rgba(217, 199, 154, 0.12);
+	border-color: rgba(217, 199, 154, 0.6);
+}
+.action-btn:active {
+	transform: translateY(1px);
+}
+
+.action-btn--primary {
+	color: #1a120b;
+	background: var(--parchment);
+	border-color: var(--parchment);
+	box-shadow: 0 3px 0 rgba(20, 12, 4, 0.5);
+}
+.action-btn--primary:hover {
+	background: #e8d6a8;
+	border-color: #e8d6a8;
+}
+.action-btn--primary:active {
+	transform: translateY(2px);
+	box-shadow: 0 1px 0 rgba(20, 12, 4, 0.5);
+}
+
 /* count chip */
 .count-chip {
 	display: inline-flex;
@@ -148,11 +190,32 @@ body {
 		);
 }
 
-/* delete icon — replace ✕ with X stroke */
-.icon-del {
-	width: 18px;
-	height: 18px;
+/* small icon button (close / discard) */
+.icon-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	color: var(--parchment);
+	background: rgba(0, 0, 0, 0.25);
+	border: 1px solid rgba(217, 199, 154, 0.2);
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background 150ms ease, color 150ms ease, transform 100ms ease;
+}
+.icon-btn:hover {
+	background: rgba(196, 97, 42, 0.85);
+	color: #fff;
+}
+.icon-btn:active {
+	transform: translateY(1px);
+}
+
+.meta-icon {
 	display: inline-block;
+	vertical-align: middle;
+	opacity: 0.85;
 }
 
 /* header crest */

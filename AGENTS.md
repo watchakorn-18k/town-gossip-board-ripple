@@ -43,7 +43,8 @@ No tests configured.
 
 If you are Claude Code, follow the skill rules in [CLAUDE.md](CLAUDE.md):
 1. **Every turn** → invoke `karpathy-guidelines` first.
-2. **UI work** → also invoke one of `redesign-existing-projects` / `industrial-brutalist-ui` / `minimalist-ui` / `high-end-visual-design` (default fallback) / `brandkit` per the priority table.
+2. **Any `.ripple` / `.tsrx` edit, or Ripple-syntax question** → also invoke `ripple-ts` before the first Edit/Write.
+3. **UI work** → also invoke one of `redesign-existing-projects` / `industrial-brutalist-ui` / `minimalist-ui` / `high-end-visual-design` (default fallback) / `brandkit` per the priority table.
 
 Other agents without a skill system: apply the same principles manually — surgical changes, surface assumptions, match the existing RPGUI + Tailwind + daisyUI aesthetic.
 

@@ -47,6 +47,10 @@ Tailwind v4 (via `@tailwindcss/vite`) + daisyUI + **RPGUI** (RPG-themed CSS load
 
 Invoke `karpathy-guidelines` via `Skill` at the **start of every prompt** in this repo — code, UI, refactor, debug, even a question. It is short, low-token, and biases toward surgical changes + surfaced assumptions. Call it first, before any other skill (including the UI router below) and before any Edit/Write. One invocation per user turn.
 
+## Ripple Skill: `ripple-ts` (MANDATORY for any `.ripple` edit)
+
+Whenever a prompt requires reading, editing, or creating a `.ripple` / `.tsrx` file — or discusses Ripple concepts (`track`, `@` sigil, `component`, `mount`, `Portal`, `RippleArray`, `effect`, `Context`, etc.) — invoke `ripple-ts` via `Skill` **before** the first Edit/Write. Stacks with `karpathy-guidelines` (always first) and with the UI router below if the change is visual. One invocation per user turn. Pure non-Ripple work (vite config, mock data types, README) does not need it.
+
 ## UI Skill Auto-Routing (MANDATORY for any UI change)
 
 Whenever a prompt touches visual/UI work in this repo (any `.ripple` component, `index.css`, Tailwind classes, layout, color, typography, motion, dialog, card, filter, etc.), you MUST invoke exactly one design skill via `Skill` **before** editing. Pick using the decision table — keywords are matched case-insensitive against the user's prompt (TH or EN). If multiple match, use the priority order shown.

@@ -34,20 +34,29 @@ export component Card(props: {
 				<header class="flex items-baseline justify-between gap-2">
 					<h3 class="text-base font-bold leading-tight truncate">{props.name}</h3>
 					<button
-						class="btn btn-xs btn-circle btn-ghost shrink-0"
+						class="icon-btn shrink-0"
 						aria-label="Discard rumor"
 						title="Discard"
 						onclick={() => props.onDelete(props.id)}
 					>
-						{'✕'}
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square">
+							<path d="M5 5l14 14M19 5L5 19" />
+						</svg>
 					</button>
 				</header>
 				<p class="text-sm leading-snug mt-1" style="text-wrap:pretty;max-width:65ch;">
 					{props.content}
 				</p>
-				<div class="meta-row mt-2 flex items-center">
-					<span class="tabular">{'♥ ' + props.like}</span>
+				<div class="meta-row mt-2 flex items-center gap-1">
+					<svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+						<path d="M12 21s-7-4.534-7-10a4 4 0 017-2.646A4 4 0 0119 11c0 5.466-7 10-7 10z" />
+					</svg>
+					<span class="tabular">{props.like}</span>
 					<span class="meta-dot" />
+					<svg class="meta-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+						<circle cx="12" cy="12" r="9" />
+						<path d="M12 7v5l3 2" />
+					</svg>
 					<span>{formatDate(props.createAt) || 'unknown time'}</span>
 				</div>
 			</div>
