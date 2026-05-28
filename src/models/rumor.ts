@@ -4,5 +4,6 @@ export interface Rumor {
 	content: string;
 	image_url: string;
 	like: number;
+	vote: number;
 	createAt: string;
 }
