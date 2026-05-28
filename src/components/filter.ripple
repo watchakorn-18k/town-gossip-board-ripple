@@ -5,33 +5,64 @@ export component Filter(props: {
 	onChange: (newKeyword: string) => void;
 	onChangeDate: (newDateKeyword: string) => void;
 }) {
-	// select dropdown for NPC names
-	<div
-		class="mb-4 border-1 border-slate-600 rounded p-4 min-w-[200px] lg:w-1/4 rpgui-container framed-grey"
-		style="animation: slideDownFade 0.5s ease-out;"
-	>
-		<p class="text-lg py-1 font-bold">{'Filter'}</p>
-		<div>
-			<p class="py-1 text-sm font-bold">{'NPC'}</p>
+	const onReset = () => {
+		const npc = document.getElementById('filter_npc') as HTMLSelectElement;
+		const date = document.getElementById('filter_date') as HTMLSelectElement;
+		if (npc) npc.value = '';
+		if (date) date.value = 'all';
+		props.onChange('');
+		props.onChangeDate('all');
+	};
 
-			<select class="select w-full" onChange={(e) => props.onChange(e.target.value)}>
-				<option value="">{'All'}</option>
+	<aside
+		class="rpgui-container framed-grey rounded p-4 min-w-[220px] lg:w-1/4 filter-sticky"
+		style="animation: rumorIn 0.55s cubic-bezier(0.22,1,0.36,1) both;"
+	>
+		<div class="flex items-baseline justify-between mb-3">
+			<p class="eyebrow">{'Scroll · Search'}</p>
+			<button
+				class="text-xs underline opacity-70 hover:opacity-100"
+				onclick={onReset}
+				type="button"
+			>
+				{'reset'}
+			</button>
+		</div>
+
+		<div class="mb-4">
+			<label for="filter_npc" class="eyebrow block mb-1">{'NPC'}</label>
+			<select
+				id="filter_npc"
+				class="select w-full"
+				onChange={(e) => props.onChange(e.target.value)}
+			>
+				<option value="">{'— Anyone in town —'}</option>
 				for (const rumor of @props.rumors) {
 					<option value={rumor.name}>{rumor.name}</option>
 				}
 			</select>
 		</div>
-		<div>
-			<p class="py-1 text-sm font-bold">{'Date'}</p>
 
-			<select class="select w-full" onChange={(e) => props.onChangeDate(e.target.value)}>
-				<option value="all">{'All'}</option>
+		<div>
+			<label for="filter_date" class="eyebrow block mb-1">{'When'}</label>
+			<select
+				id="filter_date"
+				class="select w-full"
+				onChange={(e) => props.onChangeDate(e.target.value)}
+			>
+				<option value="all">{'Any time'}</option>
 				<option value="today">{'Today'}</option>
 				<option value="yesterday">{'Yesterday'}</option>
-				<option value="this_week">{'This Week'}</option>
-				<option value="this_month">{'This Month'}</option>
+				<option value="this_week">{'This week'}</option>
+				<option value="this_month">{'This month'}</option>
 			</select>
 		</div>
-	</div>
+
+		<hr class="my-4 opacity-30" />
+
+		<p class="text-xs leading-relaxed opacity-70" style="text-wrap:pretty;">
+			{'Whispers travel fast. Filter the scroll by teller or by day. The tavern remembers.'}
+		</p>
+	</aside>
 }
 export default Filter

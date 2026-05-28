@@ -1,62 +1,83 @@
 export component CreateRumorDialog(props: {
 	onCreate?: (newRumor: { name: string; content: string }) => void;
 }) {
+	const onSubmit = () => {
+		const nameInput = document.getElementById('npc_name_input') as HTMLInputElement;
+		const contentInput = document.getElementById('rumor_content_input') as HTMLTextAreaElement;
+		const errorEl = document.getElementById('rumor_form_error') as HTMLParagraphElement;
+
+		const name = nameInput.value.trim();
+		const content = contentInput.value.trim();
+
+		if (!name || !content) {
+			if (errorEl) {
+				errorEl.textContent = !name
+					? 'A teller without a name carries no weight.'
+					: 'The rumor is empty — say something.';
+				errorEl.style.display = 'block';
+			}
+			return;
+		}
+		if (errorEl) errorEl.style.display = 'none';
+
+		if (props.onCreate) props.onCreate({ name, content });
+		const dialog = document.getElementById('create_rumor_dialog') as HTMLDialogElement;
+		dialog.close();
+		nameInput.value = '';
+		contentInput.value = '';
+	};
+
 	<dialog id="create_rumor_dialog" class="modal">
-		<div class="modal-box rpgui-container framed !p-4">
+		<div class="modal-box rpgui-container framed !p-5" style="max-width: 32rem;">
 			<form method="dialog">
-				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+				<button
+					class="btn btn-sm btn-circle btn-ghost absolute right-3 top-3"
+					aria-label="Close"
+				>
 					{'✕'}
 				</button>
 			</form>
-			<h3 class="text-lg font-bold">{'Create Rumor!'}</h3>
-			<div class="py-2" />
-			<div class="form-control w-full">
-				<label class="label">
-					<span class="label-text">{'NPC Name'}</span>
-				</label>
+
+			<p class="eyebrow">{'Tavern · New whisper'}</p>
+			<h3 class="display-title text-xl mt-1">{'Spread a rumor'}</h3>
+			<p class="text-xs opacity-70 mt-1" style="text-wrap:pretty;">
+				{'Words leave the tavern faster than they enter. Choose them well.'}
+			</p>
+
+			<div class="mt-5">
+				<label for="npc_name_input" class="eyebrow block mb-1">{'Teller'}</label>
 				<input
 					id="npc_name_input"
 					type="text"
-					placeholder="Type NPC Name"
+					placeholder="e.g. Marla the Herbalist"
 					class="input input-bordered w-full"
+					maxlength="60"
 				/>
 			</div>
-			<label class="label mt-8">
-				<span class="label-text">{'Rumor Content'}</span>
-			</label>
-			<textarea
-				id="rumor_content_input"
-				class="textarea textarea-bordered w-full"
-				placeholder="Type Rumor Content"
+
+			<div class="mt-4">
+				<label for="rumor_content_input" class="eyebrow block mb-1">{'The rumor'}</label>
+				<textarea
+					id="rumor_content_input"
+					class="textarea textarea-bordered w-full"
+					placeholder="What did they say?"
+					rows="3"
+					maxlength="240"
+				/>
+			</div>
+
+			<p
+				id="rumor_form_error"
+				class="text-xs mt-2"
+				style="display:none;color:#c4612a;font-weight:600;"
 			/>
-			<div class="py-2" />
-			// Clear inputs
 
-			<button
-				class="rpgui-button w-full"
-				onclick={() => {
-					const nameInput = document.getElementById('npc_name_input') as HTMLInputElement;
-					const contentInput = document.getElementById(
-						'rumor_content_input',
-					) as HTMLTextAreaElement;
-					const newRumor = {
-						name: nameInput.value,
-						content: contentInput.value,
-					};
-					if (props.onCreate) {
-						props.onCreate(newRumor);
-					}
-					const dialog = document.getElementById(
-						'create_rumor_dialog',
-					) as HTMLDialogElement;
-					dialog.close();
-
-					nameInput.value = '';
-					contentInput.value = '';
-				}}
-			>
-				{'Create'}
-			</button>
+			<div class="mt-5 flex justify-end gap-2">
+				<form method="dialog" style="display:contents;">
+					<button class="rpgui-button" type="submit">{'Cancel'}</button>
+				</form>
+				<button class="rpgui-button golden" onclick={onSubmit}>{'Post rumor'}</button>
+			</div>
 		</div>
 		<form method="dialog" class="modal-backdrop">
 			<button>{'close'}</button>

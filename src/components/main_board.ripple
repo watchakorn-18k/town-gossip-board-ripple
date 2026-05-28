@@ -8,21 +8,17 @@ import { CreateRumorDialog } from '../components/dialog/create_rumor_dialog.ripp
 export component MainBoard() {
 	let rumors = track(rumorData);
 	let rumorsAll = track(rumorData);
+
 	const filterByName = (rumors: typeof rumorData, name: string) => {
-		if (name === '') {
-			return rumors;
-		}
+		if (name === '') return rumors;
 		return rumors.filter((r) => r.name === name);
 	};
 
 	const filterByDate = (rumors: typeof rumorData, name: string) => {
-		if (name === '' || name === 'all') {
-			return rumors;
-		}
+		if (name === '' || name === 'all') return rumors;
 		const now = new Date();
 		return rumors.filter((r) => {
 			const rumorDate = new Date(r.createAt);
-			console.log('Filtering by date:', name, 'Rumor date:', rumorDate);
 			if (name === 'today') {
 				return rumorDate.getDate() === now.getDate() &&
 					rumorDate.getMonth() === now.getMonth() &&
@@ -46,6 +42,7 @@ export component MainBoard() {
 			return false;
 		});
 	};
+
 	const onCreateNewRumor = (newRumor: { name: string; content: string }) => {
 		const newRumorWithDetails = {
 			...newRumor,
@@ -73,72 +70,107 @@ export component MainBoard() {
 	<head>
 		<title>{'Town Gossip Board – กระดานข่าวลือของเมือง'}</title>
 	</head>
+
 	<Portal target={document.body}>
-		<div class="rpgui-content" style="overflow-y:scroll;">
-			<div
-				class="flex flex-col justify-center align-center lg:flex-row lg:gap-4 m-4 inner rpgui-container framed"
-				style="overflow-y:scroll;position:relative"
+		<div class="rpgui-content board-scroll" style="overflow-y:scroll;min-height:100dvh;">
+			<main
+				class="flex flex-col lg:flex-row lg:items-start gap-4 m-4 p-4 inner rpgui-container framed"
+				style="position:relative;"
 			>
 				<Filter
 					rumors={@rumorsAll}
 					onChange={(keyword) => {
-						const filtered = filterByName(rumorData, keyword);
-						console.log('Filtering by:', keyword, 'Result:', filtered);
-						@rumors = filtered;
+						@rumors = filterByName(rumorData, keyword);
 					}}
 					onChangeDate={(keyword) => {
-						const filtered = filterByDate(rumorData, keyword);
-						console.log('Filtering by date:', keyword, 'Result:', filtered);
-						@rumors = filtered;
+						@rumors = filterByDate(rumorData, keyword);
 					}}
 				/>
-				<div class="border-1 border-slate-600 rpgui-container framed-grey rounded p-4 ">
-					<h1 class="!text-center !text-2xl !py-8 font-bold rpgui-container framed-grey">
-						{'Town Gossip Board – กระดานข่าวลือของเมือง'}
-						<hr class="mt-4" />
-					</h1>
 
-					<div class="flex justify-between align-center">
-						<p class="text-lg py-4 font-bold">{'Rumors'}</p>
-						<div class="flex justify-center align-center gap-2">
-							<button class="rpgui-button" onclick="create_rumor_dialog.showModal()">
-								{'Add Rumor'}
+				<section
+					class="flex-1 rpgui-container framed-grey rounded p-5 min-w-0"
+					aria-label="Rumor board"
+				>
+					<header class="flex items-start gap-4 pb-5" style="border-bottom:1px dashed rgba(217,199,154,0.25);">
+						<div class="crest" aria-hidden="true">{'📜'}</div>
+						<div class="flex-1 min-w-0">
+							<p class="eyebrow">{'Tavern Edition · Vol. III'}</p>
+							<h1 class="display-title text-2xl sm:text-3xl mt-1">
+								{'Town Gossip Board'}
+							</h1>
+							<p class="text-sm opacity-75 mt-1" style="text-wrap:pretty;max-width:52ch;">
+								{'กระดานข่าวลือของเมือง — every whisper the tavern collected since dawn.'}
+							</p>
+						</div>
+					</header>
+
+					<div class="flex flex-wrap items-center justify-between gap-3 py-4">
+						<div class="flex items-center gap-3">
+							<span class="count-chip tabular">
+								{@rumors.length + ' rumors'}
+							</span>
+							if (@rumors.length !== @rumorsAll.length) {
+								<span class="text-xs opacity-60 tabular">
+									{'of ' + @rumorsAll.length}
+								</span>
+							}
+						</div>
+						<div class="flex items-center gap-2">
+							<button
+								class="rpgui-button"
+								onclick="create_rumor_dialog.showModal()"
+								title="Open the new rumor form"
+							>
+								{'+ New rumor'}
 							</button>
-							<button class="rpgui-button" onclick={onGenerateRumor}>
-								{'Generate'}
+							<button
+								class="rpgui-button golden"
+								onclick={onGenerateRumor}
+								title="Conjure a random whisper"
+							>
+								{'⚡ Conjure'}
 							</button>
 						</div>
 					</div>
 
-					for (const rumor of @rumors) {
-						<div class="py-1  rumor-card">
-							<Card
-								id={rumor.id}
-								name={rumor.name}
-								content={rumor.content}
-								image_url={rumor.image_url}
-								like={rumor.like}
-								onDelete={onDeleteRumor}
-							/>
+					if (@rumors.length === 0) {
+						<div class="empty-scroll">
+							<p class="display-title text-lg">{'The scroll is blank.'}</p>
+							<p class="text-sm opacity-70 mt-2" style="text-wrap:pretty;">
+								{'No rumors match the current filter. Reset the scroll, or conjure a fresh one.'}
+							</p>
+							<div class="mt-4">
+								<button class="rpgui-button" onclick={onGenerateRumor}>
+									{'⚡ Conjure a rumor'}
+								</button>
+							</div>
 						</div>
 					}
-				</div>
-			</div>
+
+					<div class="flex flex-col gap-2">
+						for (const rumor of @rumors) {
+							<div class="rumor-row">
+								<Card
+									id={rumor.id}
+									name={rumor.name}
+									content={rumor.content}
+									image_url={rumor.image_url}
+									like={rumor.like}
+									createAt={rumor.createAt}
+									onDelete={onDeleteRumor}
+								/>
+							</div>
+						}
+					</div>
+
+					<footer class="scroll-footer">
+						{'sealed by the tavern keeper · do not believe everything'}
+					</footer>
+				</section>
+			</main>
 			<CreateRumorDialog onCreate={onCreateNewRumor} />
 		</div>
 	</Portal>
-	<style>
-		@keyframes -global-slideDownFade {
-			from {
-				transform: translateY(-20px);
-				opacity: 0;
-			}
-			to {
-				transform: translateY(0);
-				opacity: 1;
-			}
-		}
-	</style>
 }
 
 export default MainBoard

@@ -4,31 +4,55 @@ export component Card(props: {
 	content: string;
 	image_url: string;
 	like: number;
+	createAt?: string;
 	onDelete?: (id) => void;
 }) {
-	<div
-		class="border-1 border-slate-600 rpgui-container framed-golden-2 rounded p-2 rumor-card"
+	const formatDate = (iso?: string) => {
+		if (!iso) return '';
+		const d = new Date(iso);
+		if (isNaN(d.getTime())) return '';
+		const now = new Date();
+		const diff = (now.getTime() - d.getTime()) / 1000;
+		if (diff < 60) return 'just now';
+		if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+		if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+		if (diff < 86400 * 7) return Math.floor(diff / 86400) + 'd ago';
+		return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+	};
+
+	<article
+		class="rpgui-container framed-golden-2 rounded p-3 rumor-card"
 		style="position:relative;"
 	>
-		<div class="flex justify-start align-start">
-			<div class="flex justify-start align-start gap-2 flex-1">
-				<img src={props.image_url} class="w-16 h-16 rounded-full bg-slate-800" />
-				<div class="flex flex-col">
-					<p class="text-md font-bold">{props.name}</p>
-					<p class="text-sm overflow-hidden text-ellipsis">{props.content}</p>
+		<div class="flex items-start gap-3">
+			<img
+				src={props.image_url}
+				alt={'Portrait of ' + props.name}
+				class="npc-avatar w-16 h-16 shrink-0"
+			/>
+			<div class="flex flex-col flex-1 min-w-0">
+				<header class="flex items-baseline justify-between gap-2">
+					<h3 class="text-base font-bold leading-tight truncate">{props.name}</h3>
+					<button
+						class="btn btn-xs btn-circle btn-ghost shrink-0"
+						aria-label="Discard rumor"
+						title="Discard"
+						onclick={() => props.onDelete(props.id)}
+					>
+						{'✕'}
+					</button>
+				</header>
+				<p class="text-sm leading-snug mt-1" style="text-wrap:pretty;max-width:65ch;">
+					{props.content}
+				</p>
+				<div class="meta-row mt-2 flex items-center">
+					<span class="tabular">{'♥ ' + props.like}</span>
+					<span class="meta-dot" />
+					<span>{formatDate(props.createAt) || 'unknown time'}</span>
 				</div>
 			</div>
-			<button class="btn btn-circle btn-ghost" onclick={() => props.onDelete(props.id)}>
-				{'✕'}
-			</button>
 		</div>
-	</div>
-
-	<style>
-		.rumor-card {
-			animation: slideDownFade 0.5s ease-out;
-		}
-	</style>
+	</article>
 }
 
 export default Card

@@ -2,6 +2,197 @@
 @config "../tailwind.config.ts";
 @plugin "daisyui";
 
+:root {
+	--ink: #2a1d12;
+	--parchment: #d9c79a;
+	--parchment-deep: #b89f6a;
+	--ember: #c4612a;
+	--moss: #4a6b3a;
+	--shadow: 0 6px 0 rgba(20, 12, 4, 0.35);
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
 body {
-    font-family: 'IBM Plex Sans Thai', sans-serif;
+	font-family: 'IBM Plex Sans Thai', 'Segoe UI', system-ui, sans-serif;
+	font-feature-settings: 'tnum' 1, 'ss01' 1;
+	background-color: #1a120b;
+	background-image:
+		radial-gradient(ellipse at 20% 0%, rgba(196, 97, 42, 0.08), transparent 50%),
+		radial-gradient(ellipse at 80% 100%, rgba(74, 107, 58, 0.10), transparent 55%),
+		url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.15 0 0 0 0 0.08 0 0 0 0 0.04 0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+	background-attachment: fixed;
+}
+
+/* numeric stats */
+.tabular {
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.02em;
+}
+
+/* display hierarchy */
+.display-title {
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	line-height: 1.05;
+	text-wrap: balance;
+}
+
+.eyebrow {
+	font-size: 0.7rem;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	opacity: 0.7;
+	font-weight: 600;
+}
+
+/* rumor card motion */
+.rumor-row {
+	animation: rumorIn 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.rumor-row:hover .rumor-card {
+	transform: translateY(-2px);
+}
+
+.rumor-card {
+	transition: transform 200ms ease, filter 200ms ease;
+}
+
+@keyframes rumorIn {
+	0% {
+		opacity: 0;
+		transform: translateY(8px) scale(0.985);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+/* avatar — slight rounded square, not full circle */
+.npc-avatar {
+	border-radius: 8px;
+	image-rendering: pixelated;
+	box-shadow:
+		inset 0 0 0 2px rgba(0, 0, 0, 0.4),
+		0 3px 0 rgba(0, 0, 0, 0.35);
+	background: #2a1d12;
+}
+
+/* focus ring */
+:focus-visible {
+	outline: 2px dashed var(--ember);
+	outline-offset: 3px;
+}
+
+/* RPGUI button polish */
+.rpgui-button:active {
+	transform: translateY(1px);
+}
+
+/* count chip */
+.count-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	background: rgba(0, 0, 0, 0.35);
+	border: 1px solid rgba(217, 199, 154, 0.25);
+	border-radius: 4px;
+	color: var(--parchment);
+}
+
+.count-chip::before {
+	content: '';
+	width: 6px;
+	height: 6px;
+	background: var(--ember);
+	box-shadow: 0 0 8px var(--ember);
+}
+
+/* meta row inside card */
+.meta-row {
+	font-size: 0.72rem;
+	letter-spacing: 0.05em;
+	opacity: 0.72;
+}
+
+.meta-dot {
+	display: inline-block;
+	width: 3px;
+	height: 3px;
+	margin: 0 8px;
+	background: currentColor;
+	opacity: 0.5;
+	vertical-align: middle;
+}
+
+/* empty state */
+.empty-scroll {
+	border: 2px dashed rgba(217, 199, 154, 0.25);
+	border-radius: 6px;
+	padding: 2.5rem 1.5rem;
+	text-align: center;
+	background:
+		repeating-linear-gradient(
+			135deg,
+			transparent 0 12px,
+			rgba(217, 199, 154, 0.03) 12px 24px
+		);
+}
+
+/* delete icon — replace ✕ with X stroke */
+.icon-del {
+	width: 18px;
+	height: 18px;
+	display: inline-block;
+}
+
+/* header crest */
+.crest {
+	width: 56px;
+	height: 56px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 28px;
+	background: radial-gradient(circle at 30% 30%, #c4612a, #6b2f12);
+	border-radius: 50%;
+	box-shadow:
+		inset 0 -4px 0 rgba(0, 0, 0, 0.35),
+		inset 0 2px 0 rgba(255, 220, 180, 0.25),
+		0 4px 0 rgba(0, 0, 0, 0.45);
+	filter: drop-shadow(0 0 6px rgba(196, 97, 42, 0.4));
+}
+
+/* sticky filter on lg */
+@media (min-width: 1024px) {
+	.filter-sticky {
+		position: sticky;
+		top: 1rem;
+		align-self: flex-start;
+	}
+}
+
+/* board scroll smoothing */
+.board-scroll {
+	scrollbar-color: var(--parchment-deep) transparent;
+}
+
+/* footer */
+.scroll-footer {
+	margin-top: 2rem;
+	padding: 1.25rem 1rem;
+	text-align: center;
+	font-size: 0.72rem;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	opacity: 0.55;
 }
